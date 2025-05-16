@@ -1,70 +1,57 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
   <title>Contador desde la extinción de los dinosaurios</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      background: #1e1e1e;
-      color: #fff;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
       text-align: center;
+      background: black;
+      color: white;
+      padding: 50px;
     }
     h1 {
       font-size: 2em;
-      margin-bottom: 20px;
     }
-    .counter {
+    .contador {
       font-size: 1.5em;
-      background: #333;
-      padding: 20px;
-      border-radius: 10px;
+      margin-top: 20px;
     }
   </style>
 </head>
 <body>
-  <h1>Tiempo desde que se extinguieron los dinosaurios</h1>
-  <div class="counter" id="counter"></div>
+  <h1>Tiempo desde la extinción de los dinosaurios</h1>
+  <div class="contador" id="contador"></div>
 
   <script>
-    // Estimamos que fue hace 66 millones de años exactos
-    const MILLION_YEARS = 66;
-    const now = new Date();
+    function actualizarContador() {
+      const millones = 66000000;
+      const ahora = new Date();
+      const fechaExtincion = new Date(ahora);
+      fechaExtincion.setFullYear(fechaExtincion.getFullYear() - millones);
 
-    // Convertimos 66 millones de años a milisegundos (aproximado)
-    const years = MILLION_YEARS;
-    const extinctionDate = new Date(now.getTime() - years * 365.25 * 24 * 60 * 60 * 1000);
+      const diferencia = ahora - fechaExtincion;
 
-    function updateCounter() {
-      const now = new Date();
-      let diff = now - extinctionDate;
+      const totalSegundos = Math.floor(diferencia / 1000);
+      const totalMinutos = Math.floor(totalSegundos / 60);
+      const totalHoras = Math.floor(totalMinutos / 60);
+      const totalDias = Math.floor(totalHoras / 24);
 
-      let seconds = Math.floor(diff / 1000);
-      let minutes = Math.floor(seconds / 60);
-      let hours = Math.floor(minutes / 60);
-      let days = Math.floor(hours / 24);
-      let months = Math.floor(days / 30.44);
-      let years = Math.floor(days / 365.25);
+      const años = Math.floor(totalDias / 365.25);
+      const meses = Math.floor((totalDias % 365.25) / 30.44);
+      const dias = Math.floor((totalDias % 365.25) % 30.44);
+      const horas = totalHoras % 24;
+      const minutos = totalMinutos % 60;
+      const segundos = totalSegundos % 60;
 
-      months = months % 12;
-      days = Math.floor(days % 30.44);
-      hours = hours % 24;
-      minutes = minutes % 60;
-      seconds = seconds % 60;
-
-      document.getElementById("counter").innerHTML =
-        `${years} años, ${months} meses, ${days} días, ` +
-        `${hours} horas, ${minutes} minutos, ${seconds} segundos`;
+      document.getElementById("contador").innerHTML =
+        `${años.toLocaleString()} años, ${meses} meses, ${dias} días, ` +
+        `${horas} horas, ${minutos} minutos, ${segundos} segundos`;
     }
 
-    updateCounter();
-    setInterval(updateCounter, 1000);
+    actualizarContador();
+    setInterval(actualizarContador, 1000);
   </script>
 </body>
 </html>
