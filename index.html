@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contador desde la extinción de los dinosaurios</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #1e1e1e;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      text-align: center;
+    }
+    h1 {
+      font-size: 2em;
+      margin-bottom: 20px;
+    }
+    .counter {
+      font-size: 1.5em;
+      background: #333;
+      padding: 20px;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Tiempo desde que se extinguieron los dinosaurios</h1>
+  <div class="counter" id="counter"></div>
+
+  <script>
+    // Estimamos que fue hace 66 millones de años exactos
+    const MILLION_YEARS = 66;
+    const now = new Date();
+
+    // Convertimos 66 millones de años a milisegundos (aproximado)
+    const years = MILLION_YEARS;
+    const extinctionDate = new Date(now.getTime() - years * 365.25 * 24 * 60 * 60 * 1000);
+
+    function updateCounter() {
+      const now = new Date();
+      let diff = now - extinctionDate;
+
+      let seconds = Math.floor(diff / 1000);
+      let minutes = Math.floor(seconds / 60);
+      let hours = Math.floor(minutes / 60);
+      let days = Math.floor(hours / 24);
+      let months = Math.floor(days / 30.44);
+      let years = Math.floor(days / 365.25);
+
+      months = months % 12;
+      days = Math.floor(days % 30.44);
+      hours = hours % 24;
+      minutes = minutes % 60;
+      seconds = seconds % 60;
+
+      document.getElementById("counter").innerHTML =
+        `${years} años, ${months} meses, ${days} días, ` +
+        `${hours} horas, ${minutes} minutos, ${seconds} segundos`;
+    }
+
+    updateCounter();
+    setInterval(updateCounter, 1000);
+  </script>
+</body>
+</html>
