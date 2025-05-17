@@ -25,29 +25,29 @@
   <div id="contador"></div>
 
   <script>
-    // Año estimado de la extinción: 66 millones de años atrás (65.5 Ma aprox.)
-    const añosDesdeExtincion = 66000000;
-    const fechaExtincion = new Date();
-    fechaExtincion.setFullYear(fechaExtincion.getFullYear() - añosDesdeExtincion);
+    // Tiempo estimado desde la extinción: 66 millones de años
+    // 1 año = 365.25 días = 31557600 segundos
+    const segundosDesdeExtincion = 66000000 * 31557600;
 
     function actualizarContador() {
       const ahora = new Date();
-      const diferenciaSegundos = Math.floor((ahora - fechaExtincion) / 1000);
+      const ahoraSegundos = Math.floor(ahora.getTime() / 1000);
+      const tiempoTotal = segundosDesdeExtincion + ahoraSegundos;
 
-      const años = Math.floor(diferenciaSegundos / (365.25 * 24 * 3600));
-      const restanteAño = diferenciaSegundos % (365.25 * 24 * 3600);
+      const años = Math.floor(tiempoTotal / 31557600);
+      const restanteAño = tiempoTotal % 31557600;
 
-      const meses = Math.floor(restanteAño / (30.44 * 24 * 3600));
-      const restanteMes = restanteAño % (30.44 * 24 * 3600);
+      const meses = Math.floor(restanteAño / 2629800); // segundos en un mes promedio
+      const restanteMes = restanteAño % 2629800;
 
-      const dias = Math.floor(restanteMes / (24 * 3600));
-      const restanteDia = restanteMes % (24 * 3600);
+      const dias = Math.floor(restanteMes / 86400);
+      const restanteDia = restanteMes % 86400;
 
       const horas = Math.floor(restanteDia / 3600);
       const restanteHora = restanteDia % 3600;
 
       const minutos = Math.floor(restanteHora / 60);
-      const segundos = Math.floor(restanteHora % 60);
+      const segundos = restanteHora % 60;
 
       document.getElementById("contador").innerHTML =
         `${años.toLocaleString()} años, ${meses} meses, ${dias} días, ` +
