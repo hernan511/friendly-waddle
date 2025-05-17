@@ -25,15 +25,17 @@
   <div id="contador"></div>
 
   <script>
-    // Total aproximado de segundos en 66 millones de años
-    const segundosIniciales = 66 * 1000000 * 365.25 * 24 * 60 * 60;
-    let segundosTranscurridos = Math.floor(segundosIniciales);
+    // Año estimado de la extinción: 66 millones de años atrás (65.5 Ma aprox.)
+    const añosDesdeExtincion = 66000000;
+    const fechaExtincion = new Date();
+    fechaExtincion.setFullYear(fechaExtincion.getFullYear() - añosDesdeExtincion);
 
     function actualizarContador() {
-      segundosTranscurridos++;
+      const ahora = new Date();
+      const diferenciaSegundos = Math.floor((ahora - fechaExtincion) / 1000);
 
-      const años = Math.floor(segundosTranscurridos / (365.25 * 24 * 3600));
-      const restanteAño = segundosTranscurridos % (365.25 * 24 * 3600);
+      const años = Math.floor(diferenciaSegundos / (365.25 * 24 * 3600));
+      const restanteAño = diferenciaSegundos % (365.25 * 24 * 3600);
 
       const meses = Math.floor(restanteAño / (30.44 * 24 * 3600));
       const restanteMes = restanteAño % (30.44 * 24 * 3600);
